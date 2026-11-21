@@ -1,0 +1,13 @@
+---
+import { getEntry, render } from 'astro:content';
+import Site from '../layouts/Site.astro';
+const page = (await getEntry('pages', 'startseite'))!;
+const { Content } = await render(page);
+---
+<Site title={page.data.title} description={page.data.description}>
+  <h1 class="sr-only">{page.data.description}</h1>
+  <section class="home-grid">
+    <img class="home-image" src={page.data.image} alt={page.data.imageAlt} fetchpriority="high" />
+    <div class="home-links"><Content /></div>
+  </section>
+</Site>

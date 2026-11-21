@@ -1,0 +1,13 @@
+---
+import { getEntry, render } from 'astro:content';
+import Site from '../layouts/Site.astro';
+const page = (await getEntry('pages', '404'))!;
+const { Content } = await render(page);
+---
+<Site title={page.data.title} description={page.data.description} noindex>
+  <section class="not-found">
+    <p class="error-code" aria-hidden="true">404</p>
+    <h1>{page.data.title}</h1>
+    <div class="prose"><Content /></div>
+  </section>
+</Site>

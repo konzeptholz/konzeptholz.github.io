@@ -1,0 +1,69 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import '@fontsource/pt-sans-narrow/400.css';
+import '@fontsource/roboto-condensed/400.css';
+import '@fontsource/roboto-condensed/700.css';
+import '../styles/global.css';
+interface Props { title: string; description: string; noindex?: boolean; }
+const { title, description, noindex = false } = Astro.props;
+const site = (await getEntry('shared', 'site'))!;
+const { Content: Contact } = await render(site);
+const services = (await getCollection('pages', ({ data }) => data.order !== undefined))
+  .sort((a, b) => a.data.order! - b.data.order!);
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+<!doctype html>
+<html lang="de-CH">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title} – {site.data.title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    <meta property="og:title" content={`${title} – ${site.data.title}`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+  </head>
+  <body class:list={{ "legal-site": Astro.url.pathname === "/impressum-datenschutz/" }} style={`--site-background: url('${site.data.background}')`}>
+    <a class="skip-link" href="#main">{site.data.skipLabel}</a>
+    <div class="site-shell">
+      <header>
+        <a class="logo" href="/" aria-label={`${site.data.title} – ${site.data.homeLabel}`}>
+          <img src={site.data.logo} alt={site.data.title} width="213" height="209" />
+        </a>
+        <button class="menu-toggle" aria-label={site.data.navLabel} aria-controls="navigation" aria-expanded="false">
+          <svg viewBox="0 0 50 50" aria-hidden="true"><path d="M5 9h40M5 25h40M5 41h40" /></svg>
+        </button>
+        <dialog id="navigation" aria-label={site.data.navLabel}>
+          <button class="menu-close" aria-label={site.data.closeLabel}>
+            <svg viewBox="0 0 42 42" aria-hidden="true"><path d="m9 9 24 24M33 9 9 33" /></svg>
+          </button>
+          <nav aria-label={site.data.navLabel}>
+            {services.map(page => <a href={`/${page.id}/`} aria-current={Astro.url.pathname === `/${page.id}/` ? 'page' : undefined}>{page.data.title}</a>)}
+          </nav>
+        </dialog>
+      </header>
+      <main id="main" tabindex="-1"><slot /></main>
+      <footer>
+        <svg class="footer-line" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="100" x2="100" y2="0" /></svg>
+        <address><Contact /></address>
+        <a href="/impressum-datenschutz/">{site.data.legalLabel}</a>
+      </footer>
+    </div>
+  </body>
+</html>
+
+<script>
+  const menu = document.querySelector<HTMLDialogElement>('#navigation')!;
+  const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle')!;
+  toggle.addEventListener('click', () => { menu.showModal(); toggle.setAttribute('aria-expanded', 'true'); });
+  menu.querySelector('.menu-close')!.addEventListener('click', () => menu.close());
+  menu.addEventListener('click', (event) => {
+    const box = menu.getBoundingClientRect();
+    if (event.clientX < box.left || event.clientX > box.right) menu.close();
+  });
+  menu.addEventListener('close', () => { toggle.setAttribute('aria-expanded', 'false'); toggle.focus(); });
+</script>

@@ -1,0 +1,34 @@
+---
+import { getCollection, render } from 'astro:content';
+const entries = (await getCollection('legal')).sort((a,b) => a.data.order - b.data.order);
+const sections = await Promise.all(entries.map(async entry => ({ entry, ...await render(entry) })));
+---
+<div class="legal-sections">
+  {sections.map(({ entry, Content }, index) => <details name="legal-section" open={index === 0}>
+    <summary>{entry.data.title}</summary>
+    <div class="legal-panel"><Content /></div>
+  </details>)}
+</div>
+
+<script>
+  const sections = [...document.querySelectorAll<HTMLDetailsElement>('.legal-sections details')];
+  const desktop = window.matchMedia('(min-width: 768px)');
+  let lastOpened = sections.find(section => section.open) ?? sections[0];
+
+  for (const section of sections) {
+    section.querySelector('summary')!.addEventListener('click', event => {
+      // Native summary activation covers mouse, touch, Enter, and Space.
+      if (desktop.matches && section.open) event.preventDefault();
+    });
+    section.addEventListener('toggle', () => {
+      if (section.open) lastOpened = section;
+    });
+  }
+
+  desktop.addEventListener('change', () => {
+    // Mobile may leave both collapsed; restore the last section when widening.
+    if (desktop.matches && !sections.some(section => section.open)) {
+      lastOpened.open = true;
+    }
+  });
+</script>

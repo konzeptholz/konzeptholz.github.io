@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://konzeptholz.ch/sitemap-index.xml
