@@ -14,7 +14,7 @@ const pages = defineCollection({
 const shared = defineCollection({
   loader: glob({ pattern: '*.md', base: './src/content/shared' }),
   schema: z.object({
-    title: z.string(), logo: z.string(), background: z.string(),
+    title: z.string(), logo: z.string(), background: z.string(), backgroundImageSet: z.string().optional(),
     homeLabel: z.string(), navLabel: z.string(), skipLabel: z.string(),
     backLabel: z.string(), legalLabel: z.string(), closeLabel: z.string(),
   }),

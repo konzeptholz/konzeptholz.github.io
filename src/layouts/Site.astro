@@ -27,7 +27,10 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
   </head>
-  <body class:list={{ "legal-site": Astro.url.pathname === "/impressum-datenschutz/" }} style={`--site-background: url('${site.data.background}')`}>
+  <body class:list={{ "legal-site": Astro.url.pathname === "/impressum-datenschutz/" }} style={{
+    '--site-background': `url('${site.data.background}')`,
+    '--site-background-set': site.data.backgroundImageSet && `image-set(${site.data.backgroundImageSet})`,
+  }}>
     <a class="skip-link" href="#main">{site.data.skipLabel}</a>
     <div class="site-shell">
       <header>
