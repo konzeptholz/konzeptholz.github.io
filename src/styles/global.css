@@ -174,3 +174,14 @@ footer > a { display: block; font-size: 12px; text-transform: uppercase; text-al
 
 .legal-home-link { display: flex; align-items: center; gap: 15px; width: fit-content; height: auto; }
 .legal-home-link svg { flex-shrink: 0; }
+
+.contact-note { font-size: 15px; }
+#contact-captcha { width: min(380px, calc(100vw - 20px)); padding: 25px; border: 1px solid var(--copper); background: var(--ink); color: var(--copper); }
+#contact-captcha::backdrop { background: #000c; }
+#contact-captcha h2 { margin: 0 0 15px; }
+#contact-captcha p { margin: 0 0 20px; }
+#contact-captcha .captcha-status { min-height: 1.5em; }
+#contact-captcha .captcha-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 15px; }
+#contact-captcha button { padding: 5px 15px; border: 1px solid var(--copper); background: none; }
+#contact-captcha .captcha-confirm, #contact-captcha button:hover { background: var(--copper); color: var(--ink); }
+#contact-captcha button:disabled { opacity: .6; cursor: default; }

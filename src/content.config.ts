@@ -17,6 +17,10 @@ const shared = defineCollection({
     title: z.string(), logo: z.string(), background: z.string(), backgroundImageSet: z.string().optional(),
     homeLabel: z.string(), navLabel: z.string(), skipLabel: z.string(),
     backLabel: z.string(), legalLabel: z.string(), closeLabel: z.string(),
+    contact: z.object({
+      title: z.string(), hint: z.string(), confirm: z.string(), checking: z.string(),
+      error: z.string(), close: z.string(), noscript: z.string(),
+    }),
   }),
 });
 const legal = defineCollection({

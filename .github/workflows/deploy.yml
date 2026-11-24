@@ -9,6 +9,9 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      CONTACT_EMAIL: ${{ secrets.CONTACT_EMAIL }}
+      CONTACT_PHONE: ${{ secrets.CONTACT_PHONE }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

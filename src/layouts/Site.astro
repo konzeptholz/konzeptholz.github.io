@@ -4,6 +4,7 @@ import '@fontsource/pt-sans-narrow/400.css';
 import '@fontsource/roboto-condensed/400.css';
 import '@fontsource/roboto-condensed/700.css';
 import '../styles/global.css';
+import ContactReveal from '../components/ContactReveal.astro';
 interface Props { title: string; description: string; noindex?: boolean; }
 const { title, description, noindex = false } = Astro.props;
 const site = (await getEntry('shared', 'site'))!;
@@ -52,10 +53,11 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       <main id="main" tabindex="-1"><slot /></main>
       <footer>
         <svg class="footer-line" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="100" x2="100" y2="0" /></svg>
-        <address><Contact /></address>
+        <address><Contact /><noscript><p class="contact-note">{site.data.contact.noscript}</p></noscript></address>
         <a href="/impressum-datenschutz/">{site.data.legalLabel}</a>
       </footer>
     </div>
+    <ContactReveal />
   </body>
 </html>
 

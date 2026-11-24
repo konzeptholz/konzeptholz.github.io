@@ -12,6 +12,14 @@ closeLabel: Menü schliessen
 skipLabel: Zum Inhalt springen
 backLabel: Zur Startseite
 legalLabel: Impressum / Datenschutz
+contact:
+  title: Kontakt anzeigen
+  hint: Bitte bestätigen Sie kurz, dass Sie ein Mensch sind. Danach zeigen wir Ihnen Telefonnummer und E-Mail-Adresse an.
+  confirm: Ich bin kein Roboter
+  checking: Wird geprüft …
+  error: Die Prüfung hat leider nicht funktioniert. Bitte versuchen Sie es erneut.
+  close: Schliessen
+  noscript: Telefon und E-Mail können nur mit JavaScript angezeigt werden.
 ---
 
 KONZEPTHOLZ GMBH\
